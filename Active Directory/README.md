@@ -63,7 +63,7 @@ Upload your file, then when you select next you can choose what type of file it 
 
 Once you have ingested all your data you should have a number of tables depending on what sources you are using.
 
-![AD 5](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/ADir5.png?raw=true)
+![AD 5](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/adir5.png?raw=true)
 
 You can then query your data.
 
