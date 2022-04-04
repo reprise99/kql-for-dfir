@@ -21,7 +21,7 @@ In the Defender for Identity [portal](https://portal.atp.azure.com), you can bro
 
 ![AD 2](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/adir2.png?raw=true)
 
-Once downloaded you will notice that it is downloaded in as an Excel spreadsheet, and not CSV. You will just to remove the logo and graphics from the top of the spreadsheet and save as CSV. Each file has 3 tabs. One for activities, one for directory service events and one for alerts. If you want to ingest those into different tables, just save them as three separate CSV's.
+Once downloaded you will notice that it is downloaded in as an Excel spreadsheet, and not CSV. You will just to remove the logo and graphics from the top of the spreadsheet and save as a CSV. Each file has 3 tabs. One for activities, one for directory service events and one for alerts. If you want to ingest those into different tables, just save them as three separate CSV's.
 
 ### Windows Event Logs
 
