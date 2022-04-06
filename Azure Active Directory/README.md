@@ -5,7 +5,6 @@
     - [Microsoft Graph](#Microsoft-Graph)
     - [Azure AD Portal](#Azure-AD-Portal)
     - [Defender for Cloud Apps](#Defender-for-Cloud-Apps)
-    - [Microsoft Sentinel and Advanced Hunting](#Microsoft-Sentinel-and-Advanced-Hunting)
 - [Ingesting Data](#Ingesting-Data)
 - [Hunting](#Hunting)
 
@@ -244,10 +243,6 @@ There is a limit to the number of records you can download so you should filter 
 There is a limit of 5000 records that can be exported from the UI.
 
 There may be some overlap with the data taken from the Azure AD IR PowerShell exports, but you may also get additional details from Defender for Cloud App useful to your investigation.
-
-### Microsoft Sentinel and Advanced Hunting
-
-If you have access to Microsoft Sentinel or Advanced Hunting you can of course query directly in those products too. Depending on what devices and services you log to in Microsoft Sentinel or Advanced Hunting, the above collection processes may help you fill in gaps.
 
 ## Ingesting Data
 
