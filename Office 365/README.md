@@ -73,11 +73,11 @@ Upload your file, then when you select next you can choose what type of file it 
 
 Once you have ingested all your data you should have a number of tables depending on what sources you are using.
 
-![O365 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/windowsir7.png?raw=true)
+![O365 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/o365ir6.png?raw=true)
 
 You can then query your data.
 
-![O365 7](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/windowsir6.png?raw=true)
+![O365 7](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/o365ir7.png?raw=true)
 
 ## Hunting
 
