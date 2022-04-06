@@ -91,6 +91,15 @@ Depending on your source for your data, the schema may not exactly match these e
 | Defender for Cloud App Logs | CloudApp | Defender for Cloud App Portal
 | Email Message Trace | O365MessageTrace | Exchange Online Admin Center
 
+#### Summarize all audit activities
+
+```kql
+O365UAP
+| extend AuditData = parse_json(AuditData)
+| extend Operation = tostring(AuditData.Operation)
+| summarize count()by Operation
+```
+
 #### Find which, and how many users received the same malicious email by subject
 
 ```kql
