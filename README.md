@@ -1,16 +1,14 @@
 # kql-for-dfir
 
-The concept behind using KQL for DFIR is simple. We want to leverage the hunting capabilities of KQL to find evidence in our audit and forensic data.
+The concept behind using KQL for DFIR is simple. We want to leverage the hunting capabilities of KQL to aid in our incident response or forensic investigations. 
 
 To do that, we collect forensic data using a number of different tools. That forensic data could include sign in data, event logs, current configurations and many other items. It could also come in various forms, such as JSON, CSV or just text files.
 
-We then ingest that data into Azure Data Explorer, and we are then able to query it using KQL.
+We then ingest that data into Azure Data Explorer, and we are then able to query it using KQL. At that point, we can go hunting.
 
 You can sign up to a free instance of Azure Data Explorer here(https://aka.ms/kustofree)
 
 This guide will step you through using KQL for DFIR in three steps.
-
-For each technology or device we want to investigate we will collect data, ingest that data, then hunt on it.
 
 For some investigations you may want the data from many sources. For an Active Directory incident you likely want Active Directory specific data as well as information about the Windows host itself. For an Office 365 breach, you may want also both Azure Active Directory and Active Directory logs depending on your identity configuration.
 
