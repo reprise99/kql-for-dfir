@@ -75,6 +75,14 @@ Once your data has been loaded you can query it via KQL, the same as Log Analyti
 
 Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
 
+| Data| Table Name | Log Source |
+| --- | --- | --- |
+| Defender for Identity Activities | DFIActivities | Defender for Identity Portal
+| Defender for Identity Directory Events | DFIDirectoryEvents | Defender for Identity Portal
+| Defender for Identity Alerts | DFIAlerts | Defender for Identity Portal
+| Windows Security Event Log | SecurityEvent | Exported from Domain Controller
+| Cyber Triage Output | CyberTriage | Forensic Tooling
+
 #### Defender for Identity detecting domain enumeration
 
 ```kql

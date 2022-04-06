@@ -15,7 +15,7 @@ With Office 365 incidents, it is likely you will also want the logs and forensic
 
 ### Office 365 Unified Audit Log
 
-You can export events from the Unified Audit Log found [here](https://security.microsoft.com/auditlogsearch).
+You can export events from the Unified Audit Log found in the Security and Compliance Center [here](https://security.microsoft.com/auditlogsearch).
 
 There is a limit to how many items you can export, so you can filter on times, activities, users or particular sites or files.
 
@@ -68,3 +68,24 @@ For our example, we are going to ingest our Unified Audit Log output. Occasional
 ![O365 5](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/o365ir5.png?raw=true)
 
 Upload your file, then when you select next you can choose what type of file it is. You will be given a preview of your data prior to ingestion. For a CSV you can ignore the first record if it has column headers already.
+
+Once you have ingested all your data you should have a number of tables depending on what sources you are using.
+
+![O365 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/windowsir7.png?raw=true)
+
+You can then query your data.
+
+![O365 7](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/windowsir6.png?raw=true)
+
+## Hunting
+
+Once your data has been loaded you can query it via KQL, the same as Log Analytics or Microsoft Sentinel. Some example queries are below. The following queries assume you have loaded the data into the following tables. Adjust them if you have named your tables differently.
+
+Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
+
+| Data| Table Name | Log Source |
+| --- | --- | --- |
+| Office 365 Unified Audit | O365UAP | M365 Security & Compliance Center
+| Defender for Cloud App Logs | O365MessageTrace | Defender for Cloud App Portal
+| Email Message Trace | ScheduledTasks | Exchange Online Admin Center
+

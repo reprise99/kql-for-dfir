@@ -91,7 +91,7 @@ Once your data has been loaded you can query it via KQL, the same as Log Analyti
 
 Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
 
-| Audit Source | Table Name | Source |
+| Data| Table Name | Log Source |
 | --- | --- | --- |
 | Installed Programs | InstalledPrograms | DfE Investigation Package
 | Processes | Processes | DfE Investigation Package

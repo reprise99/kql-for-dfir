@@ -290,7 +290,7 @@ Once your data has been loaded you can query it via KQL, the same as Log Analyti
 
 Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
 
-| Audit Source | Table Name | Source |
+| Data| Table Name | Log Source |
 | --- | --- | --- |
 | Azure AD Service Principal Application Permissions | AADSPApplicationPermissions | Azure AD IR |
 | Azure AD Service Principal Delegated Permissions | AADSPDelegatedPermissions | Azure AD IR |
