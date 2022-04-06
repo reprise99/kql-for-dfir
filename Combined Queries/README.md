@@ -53,7 +53,7 @@ AADRoles
 
 ## Hunting
 
-#### Retrieve all actitivites from privileged AAD users in O365
+#### Retrieve all O365 audit actitivites from privileged Azure AD Users
 
 ```kql
 AADRoles
@@ -76,3 +76,6 @@ database('Office365IR').O365MessageTrace
 )
  on $left.RoleMemberUPN == $right.RecipientAddress
  ```
+
+ #### Application consent or service principal addition by a user who received a malicious email
+
