@@ -75,13 +75,46 @@ Once your data has been loaded you can query it via KQL, the same as Log Analyti
 
 Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
 
-
 #### Defender for Identity detecting domain enumeration
 
 ```kql
 DFIActivities
 | where Type == "Enumerate Domain Trusts"
 | project ['Start Time _UTC_'], ['End Time _UTC_'], ['Source Computer'], ['Source IP Addresses'], ['Destination Computers']
+```
+
+#### Defender for Identity service creation events
+
+```kql
+DFIActivities
+| where Type == "Service Creation"
+```
+
+#### Defender for Identity summarize credentials validation
+
+```kql
+DFIActivities
+| where Type == "Credentials Validation"
+| summarize count()by ['Source Account']
+```
+
+#### Defender for Identity SMB file copy events
+
+```kql
+DFIActivities
+| where Type == "Smb File Copy"
+| project ['Start Time _UTC_'], ['End Time _UTC_'], ['Source Computer'], ['Source IP Addresses'], ['Source Account'], ['Destination Computers'], FilePath
+```
+
+#### Security Events, find distinct DC replication targets
+
+```kql
+SecurityEvent
+| where ['Event ID'] in ("4933","4932")
+| parse Details with * 'Destination DRA:' DestinationDRA 'Source DRA' *
+| parse Details with * 'Source DRA:' SourceDRA 'Naming Context' *
+| project ['Date and Time'], SourceDRA, DestinationDRA
+| distinct SourceDRA, DestinationDRA
 ```
 
 #### Cyber Triage notable or likely notable events
