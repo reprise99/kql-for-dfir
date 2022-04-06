@@ -23,6 +23,8 @@ There is a limit to how many items you can export, so you can filter on times, a
 
 Once you have searched you can export to CSV ready to ingest.
 
+If you are dealing with a large volume of data, you can export via PowerShell. There are a number of open source options to export, the one I have tested with is [here](https://github.com/PwC-IR/Office-365-Extractor/blob/master/Office365_Extractor.ps1). This one seems to handle large amounts of data and retries a little better than others.
+
 ### Defender for Cloud Apps
 
 You can export the Activity Log directly to CSV from the Defender for Cloud Apps (previous Cloud App Security) portal into CSV ready to ingest.
@@ -51,9 +53,9 @@ There will be overlap with the data taken from the other sources, but more data 
 
 You can create a free instance of Azure Data Explorer here(https://aka.ms/kustofree). Any Microsoft account, even a personal one, will suffice. If you already have an instance you can of course use that too.
 
-When you first sign in you will need to create a cluster and a database. You can follow the instruction here(https://docs.microsoft.com/en-us/azure/data-explorer/start-for-free-web-ui)
+When you first sign in you will need to create a cluster and a database. You can follow the instructions here(https://docs.microsoft.com/en-us/azure/data-explorer/start-for-free-web-ui).
 
-You can call your cluster whatever you like. When you name your database you can also choose whatever you like, for these examples I have named my database 'Office365IR'. If you already have a database for other incident response you can use that too of course. Especially if you want to query easily between sources.
+You can call your cluster whatever you like. When you name your database you can also choose whatever you like, for this example I have named my database 'Office365IR'. If you already have a database for other incident response you can use that too of course. Especially if you want to query easily between sources.
 
 Once your cluster and database are ready, you can ingest your data.
 
@@ -89,4 +91,43 @@ Depending on your source for your data, the schema may not exactly match these e
 | Defender for Cloud App Logs | CloudApp | Defender for Cloud App Portal
 | Email Message Trace | O365MessageTrace | Exchange Online Admin Center
 
-#### Query 1
+#### Find which, and how many users received the same malicious email by subject
+
+```kql
+O365MessageTrace
+| where Subject == "Malicious Subject"
+| summarize EmailRecipients=make_set(RecipientAddress), RecipientCount=dcount(RecipientAddress) by Subject 
+```
+
+#### Find which, and how many users received the same malicious email by sender
+
+```kql
+O365MessageTrace
+| where SenderAddress == "malicioususer@domain.com"
+| summarize EmailRecipients=make_set(RecipientAddress), RecipientCount=dcount(RecipientAddress) by SenderAddress 
+```
+
+#### Find which, and how many users received the same malicious email by subject
+
+```kql
+O365MessageTrace
+| where FromIP == "malicious IP"
+| summarize EmailRecipients=make_set(RecipientAddress), RecipientCount=dcount(RecipientAddress) by Subject, SenderAddress
+```
+
+#### Retrieved failed logons to O365 from Defender for Cloud Apps
+
+```kql
+CloudApp
+| where Category == "Failed log on"
+| project Date, User, ['User Principle Name'], ['IP address'], App, Description
+```
+
+
+#### User granted mailbox access from Defender for Cloud Apps
+
+```kql
+CloudApp
+| where Category == "Add permission to mailbox"
+| project Date, Actor=['User Principle Name'], Description
+```
