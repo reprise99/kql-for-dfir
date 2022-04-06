@@ -11,7 +11,7 @@
 
 ## Collecting Data
 
-Some of the data sources below are event driven data, and some export current configuration. It is important to note the difference. Log data such as activity logs or sign in logs will show particular events. For example, when a user signs in, or when a setting is changed. You may not retain enough data to see when particular events occured. So it is important to also include configuration data, such as a list of permissions a service principal has. That data will allow you to query on exactly what a tenant looks like at the point of export, even if you don't have the event data to show when the event happened.
+Some of the data sources below are event driven data, and some export current configuration. It is important to note the difference. Log data such as activity logs or sign in logs will show particular events. For example, when a user signs in, or when a setting is changed. You may not retain enough data to see when particular events occured. So it is important to also include configuration data, such as a list of permissions a service principal has. That data will allow you to query on exactly what a tenant looks like at the point of export, even if you don't have the event data to show when the changes happened.
 
 ### Azure AD Incident Response PowerShell
 
@@ -121,8 +121,6 @@ For this cmdlet you will need to run it from a location which can access an on p
 Get-AzureADIRPrivilegedUserOnPremCorrelation -TenantId 3a37ec34-401f-49d6-b4a0-cd939838128b -OnPremDomain company.local -CsvOutput
 ```
 
-BLAH
-
 ### Get Azure AD Sign In Detail
 
 This will extract sign in detail for particular users or service principals, it can also be filtered to time range if required. This should again be output as a JSON file ready for ingestion.
@@ -229,7 +227,9 @@ Some examples you may be able to use
 
 [Azure AD Sign In Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/SignIns) - Available as CSV or JSON. I recommend using JSON as the data has nested values.
 
-[Azure AD Audit Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Audit) - Available as CSV or JSON. I recommend using JSON as the data has nested values.
+[Azure AD Audit Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Audit) - Available as CSV or JSON. I recommend using JSON as the data has nested values. You can filter and extract particular actions from here. For instance if you select Service: Azure MFA, Category: UserManagement, you will get all MFA events such as users registing new MFA methods.
+
+[Azure AD Risky Sign-ins](https://portal.azure.com/#blade/Microsoft_AAD_IAM/IdentityProtectionMenuBlade/RiskySignIns) - 
 
 Often exporting from the portal you are limited in the amount of data that can be downloaded. So you may want to filter your query prior to exporting.
 
@@ -293,24 +293,27 @@ Once you have ingested all your data you should have a number of tables dependin
 
 Once your data has been loaded you can query it via KQL, the same as Log Analytics or Microsoft Sentinel. Some example queries are below. The following queries assume you have loaded the data into the following tables. Adjust them if you have named your tables differently.
 
-| Audit Source | Table Name |
-| --- | --- |
-| Azure AD Service Principal Application Permissions | AADSPApplicationPermissions |
-| Azure AD Service Principal Delegated Permissions | AADSPDelegatedPermissions |
-| Azure AD Audit Logs | AADAuditLogs |
-| Azure AD Privileged Role Assignments | AADRoles |
-| Azure AD PIM Assignments | AADPIMAssignments |
-| Azure AD PIM Requests | AADPIMRequests |
-| Azure AD Conditional Access | AADConditionalAccess |
-| Azure AD Dismissed User Risk | AADDismissedUserRisk |
-| Azure AD Privileged User On Prem Correlation | AADOnPrem |
-| Azure AD Sign In Detail | AADSignInDetail |
-| Azure AD Last Sign In | AADLastSignIn |
-| Azure AD Self Service Password Reset | AADSSPR |
-| Azure AD Domain Information | AADDomainInfo |
-| Azure AD MFA Analysis | AADMFA |
-| Azure AD MFA Phone to Location | AADMFAPhoneLocation |
-| Defender for Cloud App Logs | CloudApp |
+Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
+
+| Audit Source | Table Name | Source |
+| --- | --- | --- |
+| Azure AD Service Principal Application Permissions | AADSPApplicationPermissions | Azure AD IR |
+| Azure AD Service Principal Delegated Permissions | AADSPDelegatedPermissions | Azure AD IR |
+| Azure AD Audit Logs | AADAuditLogs | Azure AD IR |
+| Azure AD Privileged Role Assignments | AADRoles | Azure AD IR |
+| Azure AD PIM Assignments | AADPIMAssignments | Azure AD IR |
+| Azure AD PIM Requests | AADPIMRequests | Azure AD IR |
+| Azure AD Conditional Access | AADConditionalAccess | Azure AD IR |
+| Azure AD Dismissed User Risk | AADDismissedUserRisk | Azure AD IR |
+| Azure AD Privileged User On Prem Correlation | AADOnPrem | Azure AD IR |
+| Azure AD Sign In Detail | AADSignInDetail | Azure AD IR |
+| Azure AD Risky Sign Ins | AADRiskySignIns | Azure AD Portal
+| Azure AD Last Sign In | AADLastSignIn | Azure AD IR |
+| Azure AD Self Service Password Reset | AADSSPR | Azure AD IR |
+| Azure AD Domain Information | AADDomainInfo | Azure AD IR |
+| Azure AD MFA Analysis | AADMFA | Azure AD IR |
+| Azure AD MFA Phone to Location | AADMFAPhoneLocation | Azure AD IR |
+| Defender for Cloud App Logs | CloudApp | Azure AD IR |
 
 ### Hunting Queries
 
@@ -407,7 +410,7 @@ AADAuditLogs
 | distinct activityDisplayName, category
 ```
 
-#### Detect first time legacy authenticaiton attempt
+#### Detect first time legacy authentication attempt
 
 ```kql
 let existinglegacyusers=
@@ -432,7 +435,10 @@ AADRoles
 #### Find users being added to privileged roles events
 
 ```kql
-
+AADAuditLogs
+| where activityDisplayName == "Add member to role"
+//Exclude activations by MS PIM if you are looking for manual role additions
+| where initiatedBy_app_displayName != "MS-PIM"
 ```
 
 #### Summarize domain names assigned to Azure AD Tenant and whether verified or not
@@ -468,11 +474,19 @@ AADMFAPhoneLocation
 | where UserUsageCountry != MfaPhoneNumberCountry
 ```
 
-#### Find risky sign ins
+#### Correlate users with a risky sign in with MFA registration events
 
 ```kql
-AADSignInDetail
-| where riskDetail != "none"
+AADRiskySignIns
+| where createdDateTime > ago (30d)
+| project RiskEventTime=createdDateTime, userPrincipalName
+| join kind=inner (
+    AADAuditLogs
+    | where activityDateTime > ago (30d)
+    | where activityDisplayName  in ("User registered security info", "User deleted security info","User registered all required security info")
+    | project MFATime=activityDateTime, initiatedBy_user_userPrincipalName
+) on $left.userPrincipalName==$right.initiatedBy_user_userPrincipalName
+| extend ['Time Between Events']=datetime_diff("minute",MFATime, RiskEventTime)
 ```
 
 #### Find updates to Azure AD Authentication Method Policies

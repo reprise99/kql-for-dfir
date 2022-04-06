@@ -70,3 +70,44 @@ You can then query your data.
 ![AD 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/windowsir6.png?raw=true)
 
 ## Hunting
+
+Once your data has been loaded you can query it via KQL, the same as Log Analytics or Microsoft Sentinel. Some example queries are below. The following queries assume you have loaded the data into the following tables. Adjust them if you have named your tables differently.
+
+Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
+
+
+#### Defender for Identity detecting domain enumeration
+
+```kql
+DFIActivities
+| where Type == "Enumerate Domain Trusts"
+| project ['Start Time _UTC_'], ['End Time _UTC_'], ['Source Computer'], ['Source IP Addresses'], ['Destination Computers']
+```
+
+#### Cyber Triage notable or likely notable events
+
+```kql
+CyberTriage
+| mv-expand analysisResults
+| extend EventSignificance = tostring(analysisResults.significance)
+| summarize count()by EventSignificance, type
+| where EventSignificance in ("LikelyNotable","Notable")
+```
+
+#### Cyber Triage notable active network events
+
+```kql
+CyberTriage
+| mv-expand analysisResults
+| extend EventSignificance = tostring(analysisResults.significance)
+| where EventSignificance in ("LikelyNotable","Notable")
+| where type in ("activeNetworkConnection","listeningPort")
+```
+
+#### Cyber Triage distinct list of domains files have been downloaded from
+
+```kql
+CyberTriage
+| where type == "DOWNLOAD"
+| distinct remoteHostName
+```

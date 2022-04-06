@@ -89,14 +89,16 @@ You can then query your data.
 
 Once your data has been loaded you can query it via KQL, the same as Log Analytics or Microsoft Sentinel. Some example queries are below. The following queries assume you have loaded the data into the following tables. Adjust them if you have named your tables differently.
 
-| Audit Source | Table Name |
-| --- | --- |
-| Installed Programs | InstalledPrograms |
-| Processes | Processes |
-| Scheduled Tasks | ScheduledTasks |
-| Windows Security Event Log | SecurityEvent |
-| Services | Services |
-| Cyber Triage Output | CyberTriage
+Depending on your source for your data, the schema may not exactly match these examples, they are just to be used as a guide to what actions may be interesting in terms of forensics and incident response.
+
+| Audit Source | Table Name | Source |
+| --- | --- | --- |
+| Installed Programs | InstalledPrograms | DfE Investigation Package
+| Processes | Processes | DfE Investigation Package
+| Scheduled Tasks | ScheduledTasks | DfE Investigation Package
+| Windows Security Event Log | SecurityEvent | DfE Investigation Package
+| Services | Services | DfE Investigation Package
+| Cyber Triage Output | CyberTriage | Forensic Tooling
 
 #### Summarize scheduled tasks by run as account
 
