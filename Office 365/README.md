@@ -86,6 +86,7 @@ Depending on your source for your data, the schema may not exactly match these e
 | Data| Table Name | Log Source |
 | --- | --- | --- |
 | Office 365 Unified Audit | O365UAP | M365 Security & Compliance Center
-| Defender for Cloud App Logs | O365MessageTrace | Defender for Cloud App Portal
-| Email Message Trace | ScheduledTasks | Exchange Online Admin Center
+| Defender for Cloud App Logs | CloudApp | Defender for Cloud App Portal
+| Email Message Trace | O365MessageTrace | Exchange Online Admin Center
 
+#### Query 1
