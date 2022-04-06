@@ -43,9 +43,9 @@ Each tool is obviously going to have its own unique data structure, so the queri
 
 You can create a free instance of Azure Data Explorer [here](https://aka.ms/kustofree). Any Microsoft account, even a personal one, will suffice. If you already have an instance you can of course use that too.
 
-When you first sign in you will need to create a cluster and a database. You can follow the instruction [here](https://docs.microsoft.com/en-us/azure/data-explorer/start-for-free-web-ui)
+When you first sign in you will need to create a cluster and a database. You can follow the instructions [here](https://docs.microsoft.com/en-us/azure/data-explorer/start-for-free-web-ui).
 
-You can call your cluster whatever you like. When you name your database you can also choose whatever you like, for these examples I have named my database 'ActiveDirectoryIR'. If you already have a database for other incident response you can use that too of course. Especially if you want to query easily between sources.
+You can call your cluster whatever you like. When you name your database you can also choose whatever you like, for this example I have named my database 'ActiveDirectoryIR'. If you already have a database for other incident response you can use that too of course. Especially if you want to query easily between sources.
 
 Once your cluster and database are ready, you can ingest your data.
 
