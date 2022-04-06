@@ -256,33 +256,33 @@ Once your cluster and database are ready, you can ingest your data.
 
 You can see your database name listed here, then click 'Ingest Data'. We will just use the GUI to ingest our data.
 
-![ADX 1](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir1.png?raw=true)
+![AAD 1](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir1.png?raw=true)
 
 Once you click Ingest Data, you need to create a Table. If you are used to Log Analytics or Microsoft Sentinel, this will be how you query your data.
 
 For our example, we are going to ingest our CSV of our Service Principal application permissions we exported. We will send them to a table called AppPermissions.
 
-![ADX 2](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir2.png?raw=true)
+![AAD 2](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir2.png?raw=true)
 
 Upload your file, then when you select next you can choose what type of file it is. You will be given a preview of your data prior to ingestion. For a CSV you can ignore the first record if it has column headers already.
 
-![ADX 3](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir3.png?raw=true)
+![AAD 3](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir3.png?raw=true)
 
 It should then ingest for you and let you know when complete.
 
-![ADX 4](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir4.png?raw=true)
+![AAD 4](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir4.png?raw=true)
 
 You can then click one of the quick queries and it will send you over to the data view.
 
-![ADX 5](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir5.png?raw=true)
+![AAD 5](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir5.png?raw=true)
 
 If you are uploading JSON and it has nested properties you can have ADX extract those out to new columns. Depending on the source data you may want to extract some out, and leave some nested. ADX has a column limit so eventually you will reach that. For anything you don't extract at ingestion time, you can still use KQL operators such as mv-expand to access that data during queries.
 
-![ADX 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir6.png?raw=true)
+![AAD 6](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir6.png?raw=true)
 
 Once you have ingested all your data you should have a number of tables depending on what sources you are using. 
 
-![ADX 7](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir7.png?raw=true)
+![AAD 7](https://github.com/reprise99/kql-for-dfir/blob/main/.Images/azureadir7.png?raw=true)
 
 ## Hunting
 
