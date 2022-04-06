@@ -32,6 +32,10 @@ Use Event Logs, DNS logs and Defender for Identity to investigate Active Directo
 
 Use data from Exchange Online, Security and Compliance centre and Azure Active Directory.
 
+## [Combined Data Source Queries]
+
+Examples on how to query across separate Azure Data Explorer databases to join datasets together.
+
 # Coming Soon
 
 ## 5. Active Directory Certificate Services
