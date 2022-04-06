@@ -222,13 +222,13 @@ There are a number of locations in the Azure AD Portal you can extract or downlo
 
 Some examples you may be able to use
 
-[MFA Authentication Registration Details](https://portal.azure.com/#blade/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/UserRegistrationDetails) - Available as a CSV.
+[MFA Authentication Registration Details](https://portal.azure.com/#blade/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/UserRegistrationDetails) - Available as a CSV. This will show all the information regarding MFA events such as registring new devices.
 
-[Azure AD Sign In Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/SignIns) - Available as CSV or JSON. I recommend using JSON as the data has nested values.
+[Azure AD Sign In Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/SignIns) - Available as CSV or JSON. I recommend using JSON as the data has nested values. This provides all sign in data to your Azure AD tenant, if you reach the limit to export you can pre-filter your query.
 
 [Azure AD Audit Data](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Audit) - Available as CSV or JSON. I recommend using JSON as the data has nested values. You can filter and extract particular actions from here. For instance if you select Service: Azure MFA, Category: UserManagement, you will get all MFA events such as users registing new MFA methods.
 
-[Azure AD Risky Sign-ins](https://portal.azure.com/#blade/Microsoft_AAD_IAM/IdentityProtectionMenuBlade/RiskySignIns) - 
+[Azure AD Risky Sign-ins](https://portal.azure.com/#blade/Microsoft_AAD_IAM/IdentityProtectionMenuBlade/RiskySignIns) - Available as a CSV, This provides all the risky sign ins to your tenant, such as those with unfamiliar features. This may give you some direction rather than looking at all sign in data.
 
 Often exporting from the portal you are limited in the amount of data that can be downloaded. So you may want to filter your query prior to exporting.
 
