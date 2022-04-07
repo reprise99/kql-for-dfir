@@ -341,9 +341,7 @@ AADAuditLogs
 | where activityDisplayName == "Consent to application"
 | parse targetResources with * '{id=' AppId ';' *
 | parse targetResources with * 'displayName=' AppDisplayName ';' *
-| parse initiatedBy_user with * 'userPrincipalName=' Actor ';' *
-| parse initiatedBy_user with * 'ipAddress=' ActorIPAddress ';' *
-| project activityDateTime, activityDisplayName, Actor, ActorIPAddress, AppDisplayName, AppId
+| project activityDateTime, activityDisplayName, Actor=initiatedBy_user_userPrincipalName, ActorIPAddress=initiatedBy_user_ipAddress, AppDisplayName, AppId
 ```
 
 These events can also be found in Defender for Cloud Apps.

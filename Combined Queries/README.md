@@ -79,3 +79,15 @@ database('Office365IR').O365MessageTrace
 
  #### Application consent or service principal addition by a user who received a malicious email
 
+```kql
+let attackedusers=
+O365MessageTrace
+| where Subject == "Malicious Subject"
+| distinct RecipientAddress;
+database("AzureADIR").AADAuditLogs
+| where activityDisplayName == "Consent to application"
+| parse targetResources with * '{id=' AppId ';' *
+| parse targetResources with * 'displayName=' AppDisplayName ';' *
+| where initiatedBy_user_userPrincipalName in (attackedusers)
+| project activityDateTime, activityDisplayName, initiatedBy_user_userPrincipalName, initiatedBy_user_ipAddress, AppDisplayName, AppId
+```
