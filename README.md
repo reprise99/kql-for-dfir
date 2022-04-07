@@ -32,7 +32,7 @@ Use Event Logs, DNS logs and Defender for Identity to investigate Active Directo
 
 Use data from Exchange Online, Security and Compliance centre and Azure Active Directory.
 
-## [Combined Data Source Queries]
+## [Combined Data Source Queries](https://github.com/reprise99/kql-for-dfir/tree/main/Combined%20Queries)
 
 Examples on how to query across separate Azure Data Explorer databases to join datasets together.
 
