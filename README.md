@@ -22,7 +22,7 @@ Use the Azure AD IR PowerShell module and other log sources to investigate Azure
 
 ## 2. [Windows](https://github.com/reprise99/kql-for-dfir/tree/main/Windows)
 
-Use Defender for Endpoint, Windows event logs and foresntic tools to investigate a particular device.
+Use Defender for Endpoint, Windows event logs and forensic tools to investigate a particular device.
 
 ## 3. [Active Directory](https://github.com/reprise99/kql-for-dfir/tree/main/Active%20Directory)
 
