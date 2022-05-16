@@ -8,7 +8,7 @@ We then ingest that data into Azure Data Explorer, and we are then able to query
 
 You can sign up to a free instance of Azure Data Explorer here(https://aka.ms/kustofree)
 
-This guide will step you through using KQL for DFIR in three steps.
+This guide will step you through using KQL for DFIR in three steps. Collect your data, ingest that data into Azure Data Explorer, then go hunting.
 
 For some investigations you may want the data from many sources. For an Active Directory incident you likely want Active Directory specific data as well as information about the Windows host itself. For an Office 365 breach, you may want also both Azure Active Directory and Active Directory logs depending on your identity configuration.
 
